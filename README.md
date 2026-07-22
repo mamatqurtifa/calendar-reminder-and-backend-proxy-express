@@ -367,60 +367,7 @@ Jika tidak dikirim atau kosong, digunakan pengingat default akun Google.
 
 # Workflow
 
-<!-- TODO: Tambahkan deskripsi singkat workflow secara keseluruhan -->
-<!-- TODO: Tambahkan screenshot / diagram workflow utama -->
-
 ![Workflow Overview](public/images/workflow-overview.png)
-
----
-
-## Workflow: Router Utama (Calendar Reminder)
-
-![Workflow Router Utama](public/images/workflow-router-utama.png)
-
-### Flow
-
-```
-[Start] → [Log Monitoring] → [Entity LLM: parent_menu] → [Switch: berdasarkan parent_menu]
-                                                                  │
-      ┌────────────────┬────────────────┬────────────────┬────────┴───────┬────────────────┬────────────────┐
-      ▼                ▼                ▼                ▼                ▼                ▼                ▼
-   [Lihat          [Tambah           [Edit            [Cari           [Reminder         [Hapus          [Fallback]
-    Jadwal]         Reminder]         Reminder]        Reminder]       Berulang]         Reminder]          │
-      │                │                │                │                │                │                ▼
- (Sub-flow)       (Sub-flow)       (Sub-flow)       (Sub-flow)       (Sub-flow)       (Sub-flow)    [Agent Assistant]
-                                                                                                            ↓
-                                                                                                    [Auto Integration]
-```
-
-
-
----
-
-## Demo Bot Webchat
-
-Contoh bot yang sudah diintegrasikan dengan workflow Google Calendar di atas bisa diakses melalui link berikut:
-[Link Bot Webchat](https://chat.botika.online/v3/c5Bpf9t)
-
----
-
-## Masalah yang Muncul
-
-Berikut adalah beberapa kendala yang mungkin terjadi selama setup atau penggunaan, beserta solusinya:
-
-### 1. Agent Menolak Menjalankan Aksi
-- **Gejala**: Agent membalas "Maaf, saya tidak memiliki akses ke kalender Anda untuk menambahkan/mengedit jadwal."
-- **Penyebab**: System prompt di Agent Assistant tidak cukup kuat meyakinkan LLM bahwa ia memiliki kapabilitas sistem (API) untuk melakukan aksi tersebut.
-- **Solusi**: Pertegas `System Prompt` di Node Agent Assistant bahwa AI tersebut berperan sebagai asisten kalender yang **memiliki hak akses penuh** untuk membaca dan menulis event kalender di sistem latar belakang, dan tugas utamanya adalah mengekstrak JSON/data dari kemauan pengguna.
-
-### 2. Output Berupa JSON Alih-alih Teks Natural
-- **Gejala**: Terkadang node Agent memberikan balasan langsung berupa format JSON dari `node_output` sebelumnya, padahal sudah diinstruksikan untuk merespons dengan kalimat natural saja.
-- **Penyebab**: Instruksi tugas pada Agent Assistant kurang kuat/kalah dengan besarnya konteks JSON yang masuk, sehingga LLM terbawa format JSON.
-- **Solusi**: Perbaiki dan pertegas **Task** pada Agent Assistant. Beri instruksi yang lebih jelas/tegas."
-  
-  ![Ilustrasi Solusi JSON Output](public/images/problem-json-output.png) 
-
----
 
 ## Working Bot Footage
 
