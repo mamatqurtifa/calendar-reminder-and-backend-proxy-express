@@ -9,7 +9,7 @@ Client (n8n, Make, dsb.) cukup memanggil satu endpoint HTTP tanpa perlu mengelol
 
 ```
 Client
-        │  POST /api/calendar  { secret, action, ...params }
+        │  POST /api/calendar
         ▼
     Express server  —  berjalan sebagai proses Node.js (server-side)
         │  OAuth2 refresh_token > access_token otomatis
@@ -407,21 +407,26 @@ Berikut adalah cuplikan layar atau rekaman saat bot sedang berjalan dan memprose
 ![Footage Lihat Jadwal](public/images/footage-lihat-jadwal.png)
 
 ### 2. Tambah Jadwal (Reminder)
-![Footage Tambah Jadwal](public/images/footage-tambah-jadwal.png)
-![Result Tambah Jadwal](public/images/result-tambah-jadwal.png)
+| Percakapan Bot | Hasil di Google Calendar |
+|---|---|
+| ![Footage Tambah Jadwal](public/images/footage-tambah-jadwal.png) | ![Result Tambah Jadwal](public/images/result-tambah-jadwal.png) |
 
 ### 3. Edit Jadwal
-![Footage Edit Jadwal](public/images/footage-edit-jadwal.png)
-![Result Edit Jadwal](public/images/result-edit-jadwal.png)
+| Percakapan Bot | Hasil di Google Calendar |
+|---|---|
+| ![Footage Edit Jadwal](public/images/footage-edit-jadwal.png) | ![Result Edit Jadwal](public/images/result-edit-jadwal.png) |
 
 ### 4. Cari Jadwal
-![Footage Cari Jadwal](public/images/footage-cari-jadwal.png)
-![Result Cari Jadwal](public/images/result-cari-jadwal.png)
+| Percakapan Bot | Hasil di Google Calendar |
+|---|---|
+| ![Footage Cari Jadwal](public/images/footage-cari-jadwal.png) | ![Result Cari Jadwal](public/images/result-cari-jadwal.png) |
 
 ### 5. Tambah Jadwal Berulang
-![Footage Jadwal Berulang](public/images/footage-jadwal-berulang.png)
-![Result Tambah Jadwal Berulang](public/images/result-tambah-jadwal-berulang.png)
+| Percakapan Bot | Hasil di Google Calendar |
+|---|---|
+| ![Footage Jadwal Berulang](public/images/footage-jadwal-berulang.png) | ![Result Tambah Jadwal Berulang](public/images/result-tambah-jadwal-berulang.png) |
 
 ### 6. Hapus Jadwal
-![Footage Hapus Jadwal](public/images/footage-hapus-jadwal.png)
-![Result Hapus Jadwal](public/images/result-hapus-jadwal.png)
+| Percakapan Bot | Hasil di Google Calendar |
+|---|---|
+| ![Footage Hapus Jadwal](public/images/footage-hapus-jadwal.png) | ![Result Hapus Jadwal](public/images/result-hapus-jadwal.png) |
