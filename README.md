@@ -114,15 +114,28 @@ Uji endpoint menggunakan **Postman**:
 
 ---
 
-### 6. Deploy ke server Node.js
+### 6. Deploy ke Vercel (Direkomendasikan)
 
-Deploy proyek ini ke platform yang mendukung aplikasi Node.js seperti Render, Railway, Fly.io, VPS, atau server sendiri.
+Proyek backend Express ini dapat dengan mudah di-deploy ke Vercel sebagai serverless function. Berdasarkan [Dokumentasi Resmi Vercel untuk Express](http://vercel.com/docs/frameworks/backend/express), berikut langkah-langkahnya:
 
-Set environment variables yang sama seperti file `.env`, terutama `PORT`, `PROXY_SECRET`, dan kredensial Google.
+1. Install Vercel CLI secara global (jika belum):
+   ```bash
+   npm i -g vercel
+   ```
+2. Login dan jalankan deploy dari terminal di root direktori proyek Anda:
+   ```bash
+   vercel
+   ```
+   *Ikuti prompt yang muncul untuk mengatur proyek baru.*
+3. **Setup Environment Variables di Vercel**:
+   - Buka dashboard proyek Anda di [Vercel](https://vercel.com).
+   - Masuk ke menu **Settings** > **Environment Variables**.
+   - Anda bisa langsung **mengunggah file `.env`** atau **copy-paste seluruh isi `.env`** Anda ke kolom yang tersedia, dan semua variabel akan otomatis terisi. Anda tidak perlu memasukkan `PORT`.
+   - Setelah ditambahkan, pastikan untuk menekan tombol **Redeploy** (atau deploy ulang via CLI) agar server Vercel memuat environment variabel terbaru.
 
 **URL endpoint:**
 ```
-https://<domain-atau-ip-anda>/api/calendar
+https://<domain-vercel-anda.vercel.app>/api/calendar
 ```
 
 ---
