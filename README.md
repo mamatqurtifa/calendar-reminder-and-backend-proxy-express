@@ -118,10 +118,11 @@ Uji endpoint menggunakan **Postman**:
 
 Proyek backend Express ini dapat dengan mudah di-deploy ke Vercel sebagai serverless function. Berdasarkan [Dokumentasi Resmi Vercel untuk Express](http://vercel.com/docs/frameworks/backend/express), berikut langkah-langkahnya:
 
-1. **Deploy dari Vercel Dashboard (Pilih Salah Satu Opsi)**:
-   - **Opsi A (Paling Mudah):** Buka [Vercel Dashboard](https://vercel.com) > klik **Add New Project** > pada bagian bawah klik **Import Third-Party Git Repository**, lalu *paste* link GitHub proyek ini:
-     `https://github.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express`
-   - **Opsi B (Buat Repo Sendiri):** Unduh [index.js](https://raw.githubusercontent.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/main/index.js) dan [package.json](https://raw.githubusercontent.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/main/package.json), masukkan ke repository GitHub kosong milik Anda, lalu import repository Anda tersebut di Vercel Dashboard.
+1. **Deploy dari Vercel Dashboard**:
+   - Buka [Vercel Dashboard](https://vercel.com) > klik **Add New Project**.
+   - **Opsi Import:**
+     - *Paling Cepat:* Pada bagian bawah, klik **Import Third-Party Git Repository**, lalu *paste* link GitHub proyek ini: `https://github.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express.git`
+     - *Alternatif:* Unduh [index.js](https://raw.githubusercontent.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/main/index.js) dan [package.json](https://raw.githubusercontent.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/main/package.json) ke repository GitHub kosong, lalu import repository tersebut di Vercel.
 2. **Setup Environment Variables di Vercel**:
    - Di halaman konfigurasi deploy (atau nantinya di **Settings** > **Environment Variables**), masukkan konfigurasi `.env`.
    - Anda bisa langsung **mengunggah file `.env`** atau **copy-paste seluruh isi `.env`** Anda ke kolom yang tersedia, dan semua variabel akan otomatis terisi. Anda tidak perlu memasukkan `PORT`.
