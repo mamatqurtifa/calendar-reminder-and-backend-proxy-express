@@ -6,7 +6,7 @@ Chatbot AI yang terhubung langsung ke Google Calendar milik Anda. Chatbot ini bi
 
 ## Chatbot Persona
 
-Untuk memandu pembuatan agent AI (Agent Assistant), berikut adalah persona yang bisa Anda gunakan pada pengaturan *Persona*:
+Untuk memandu pembuatan agent AI (Agent Assistant), berikut adalah persona yang bisa Anda gunakan pada pengaturan *Persona*. Copy persona berikut dan paste pada bagian tab **Persona** di sidebar kiri [**Botika Platform v3 Agentic**](https://platform.botika.online/gpt/):
 
 ```
 You are Calendar Reminder Assistant, a helpful and reliable AI assistant that helps users manage their Google Calendar. You can create, view, search, update, delete, and organize calendar events and reminders through natural conversations. Always understand the user's intent, ask for any missing required information when necessary, and provide clear, concise, and friendly responses. When handling dates and times, interpret relative expressions such as "today", "tomorrow", "next week", or "last Monday" accurately based on the current date. Your goal is to make scheduling simple, efficient, and effortless for every user.
@@ -14,21 +14,34 @@ You are Calendar Reminder Assistant, a helpful and reliable AI assistant that he
 
 ---
 
-## Setup
+## Deploy Backend
 
 ### 1. Deploy ke Vercel (Dapatkan URL dulu)
 
 Deploy project ini ke Vercel terlebih dahulu untuk mendapatkan URL deployment Anda. URL ini diperlukan saat mengkonfigurasi Google Cloud Console.
 
-1. Buka [Vercel Dashboard](https://vercel.com) > klik **Add New Project**.
-2. **Opsi Import:**
-   - *Paling Cepat:* Pada bagian bawah, klik **Import Third-Party Git Repository**, lalu *paste* link GitHub proyek ini: `https://github.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express.git`
-   - *Alternatif:* Unduh [index.js](https://raw.githubusercontent.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/main/index.js) dan [package.json](https://raw.githubusercontent.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/main/package.json) ke repository GitHub kosong, lalu import repository tersebut di Vercel.
-3. Klik **Deploy** — **lewati pengisian env var dulu**, biarkan kosong.
-4. Setelah deploy selesai, **salin URL deployment Anda**, contoh:
+1. Buka [vercel.com](https://vercel.com) dan **login** ke akun Anda.
+2. Dari dashboard, klik **Add New Project**.
+3. Pada bagian bawah halaman, klik **Import Third-Party Git Repository**, lalu *paste* link berikut:
+
    ```
-   https://<nama-project-anda>.vercel.app
+   https://github.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express.git
    ```
+
+   ![Vercel — Import Third-Party Git Repository](public/images/vercel-import-link.png)
+
+4. Klik **Continue** dan klik **Deploy**. 
+
+     ![Vercel — Deploy Project](public/images/vercel-deploy.png)
+
+     Tunggu beberapa detik sampai proses selesai dan klik **Continue to Dashboard**
+
+5. **Salin URL deployment Anda**, contoh:
+   ```
+   https://link-deploy-project-anda.vercel.app
+   ```
+
+     ![Vercel — Deployment Success](public/images/vercel-dashboard-url-backend.png)
 
 > URL ini akan dibutuhkan di langkah berikutnya sebagai Authorized Redirect URI.
 
