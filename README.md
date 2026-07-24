@@ -1,89 +1,71 @@
-# Setup Chatbot Calendar Reminder (Express)
+# Setup Chatbot Calendar Reminder
 
-Proxy server-side berbasis Express.js untuk mengakses Google Calendar API menggunakan OAuth2 refresh token.
-Client (n8n, Make, dsb.) cukup memanggil satu endpoint HTTP tanpa perlu mengelola OAuth sendiri.
-
----
-
-## Cara Kerja
-
-```
-Client
-        │  POST /api/calendar
-        ▼
-    Express server  —  berjalan sebagai proses Node.js (server-side)
-        │  OAuth2 refresh_token > access_token otomatis
-        ▼
-  Google Calendar API v3
-```
+Chatbot AI yang terhubung langsung ke Google Calendar milik Anda. Chatbot ini bisa melihat, menambah, mengedit, mencari, dan menghapus jadwal lewat percakapan natural.
 
 ---
 
 ## Chatbot Persona
 
-Untuk memandu pembuatan agent AI (Agent Assistant), berikut adalah persona yang bisa Anda gunakan pada pengaturan *System Prompt*:
-
-> You are Calendar Reminder Assistant, a helpful and reliable AI assistant that helps users manage their Google Calendar. You can create, view, search, update, delete, and organize calendar events and reminders through natural conversations. Always understand the user's intent, ask for any missing required information when necessary, and provide clear, concise, and friendly responses. When handling dates and times, interpret relative expressions such as "today", "tomorrow", "next week", or "last Monday" accurately based on the current date. Your goal is to make scheduling simple, efficient, and effortless for every user.
-
----
-
-## Struktur File
+Untuk memandu pembuatan agent AI (Agent Assistant), berikut adalah persona yang bisa Anda gunakan pada pengaturan *Persona*:
 
 ```
-calendar-proxy-express/
-├── index.js                       ← server utama dan semua handler API
-├── package.json
-├── package-lock.json
-├── .env.example                   ← template environment variables
-├── .env                           ← file lokal untuk secret dan kredensial
-└── .gitignore
+You are Calendar Reminder Assistant, a helpful and reliable AI assistant that helps users manage their Google Calendar. You can create, view, search, update, delete, and organize calendar events and reminders through natural conversations. Always understand the user's intent, ask for any missing required information when necessary, and provide clear, concise, and friendly responses. When handling dates and times, interpret relative expressions such as "today", "tomorrow", "next week", or "last Monday" accurately based on the current date. Your goal is to make scheduling simple, efficient, and effortless for every user.
 ```
 
 ---
 
 ## Setup
 
-### 1. Google Cloud
+### 1. Deploy ke Vercel (Dapatkan URL dulu)
 
-1. Buka [Google Cloud Console](https://console.cloud.google.com) > buat atau pilih project.
+Deploy project ini ke Vercel terlebih dahulu untuk mendapatkan URL deployment Anda. URL ini diperlukan saat mengkonfigurasi Google Cloud Console.
+
+1. Buka [Vercel Dashboard](https://vercel.com) > klik **Add New Project**.
+2. **Opsi Import:**
+   - *Paling Cepat:* Pada bagian bawah, klik **Import Third-Party Git Repository**, lalu *paste* link GitHub proyek ini: `https://github.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express.git`
+   - *Alternatif:* Unduh [index.js](https://raw.githubusercontent.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/main/index.js) dan [package.json](https://raw.githubusercontent.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/main/package.json) ke repository GitHub kosong, lalu import repository tersebut di Vercel.
+3. Klik **Deploy** — **lewati pengisian env var dulu**, biarkan kosong.
+4. Setelah deploy selesai, **salin URL deployment Anda**, contoh:
+   ```
+   https://<nama-project-anda>.vercel.app
+   ```
+
+> URL ini akan dibutuhkan di langkah berikutnya sebagai Authorized Redirect URI.
+
+---
+
+### 2. Setup Google Cloud Console
+
+1. Buka [Google Cloud Console](https://console.cloud.google.com) > login > buat atau pilih project.
 2. **APIs & Services > Library** > aktifkan **Google Calendar API**.
 
    ![Google Cloud Console — Enable Google Calendar API](public/images/console-calender-api.png)
 
-3. **APIs & Services > OAuth consent screen** > isi nama app dan email, tambahkan akun di **Test users** jika status masih *Testing*.
+3. **APIs & Services > OAuth consent screen** > isi nama app dan email, lalu **Publish App** jika sudah siap dipakai.
 
    ![Google Cloud Console — OAuth Consent Screen](public/images/console-oauth-consent.png)
 
 4. **APIs & Services > Credentials > Create Credentials > OAuth client ID**:
    - Application type: **Web application**
-   - Authorized redirect URIs: `http://localhost:3000/oauth2callback`
+   - Authorized redirect URIs — tambahkan **keduanya**:
+     ```
+     http://localhost:3000/oauth2callback
+     https://<nama-project-anda>.vercel.app/oauth2callback
+     ```
    - Salin **Client ID** dan **Client Secret**.
 
    ![Google Cloud Console — Create OAuth Client ID](public/images/console-create-oauth.png)
 
 ---
 
-### 2. Instalasi Dependency
-
-```bash
-npm install
-```
-
----
-
-### 3. Ambil Refresh Token
+### 3. Ambil Refresh Token & Isi Environment Variables
 
 Refresh token hanya perlu didapatkan sekali. Server akan me-refresh access token secara otomatis selanjutnya.
 
 1. Ambil refresh token dengan flow OAuth2 sekali saja menggunakan script helper, OAuth Playground, atau tool lain yang kamu pakai.
 2. Pastikan hasil akhirnya berupa nilai `GOOGLE_REFRESH_TOKEN`.
-3. Simpan token itu ke file `.env` bersama kredensial lain.
 
----
-
-### 4. Environment Variables
-
-Copy `.env.example` jadi `.env`, lalu isi:
+Setelah mendapatkan semua nilai, siapkan environment variables berikut:
 
 ```env
 PORT=3000
@@ -95,51 +77,19 @@ DEFAULT_TIMEZONE=Asia/Jakarta
 PROXY_SECRET=string-acak-panjang-dan-unik
 ```
 
----
-
-### 5. Test Lokal (Opsional)
-
-```bash
-npm run dev
-```
-
-Uji endpoint menggunakan **Postman**:
-
-1. Method `POST`, URL `http://localhost:3000/api/calendar`
-2. Tab **Body** > **raw** > **JSON**
-3. Isi body, klik **Send**:
-
-```json
-{
-  "secret": "string-acak-panjang-dan-unik",
-  "action": "list",
-  "start": "2026-08-01T00:00:00+07:00",
-  "end":   "2026-08-31T23:59:59+07:00"
-}
-```
-
-![Test endpoint menggunakan Postman](public/images/postman-test.png)
+Sesuaikan `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`, dan `PROXY_SECRET` dengan nilai milik Anda. Anda bisa menyalin template di atas ke Notepad lalu edit di sana.
 
 ---
 
-### 6. Deploy ke Vercel (Direkomendasikan)
+### 4. Tambahkan Env Var di Vercel & Redeploy
 
-Proyek backend Express ini dapat dengan mudah di-deploy ke Vercel sebagai serverless function. Berdasarkan [Dokumentasi Resmi Vercel untuk Express](http://vercel.com/docs/frameworks/backend/express), berikut langkah-langkahnya:
-
-1. **Deploy dari Vercel Dashboard**:
-   - Buka [Vercel Dashboard](https://vercel.com) > klik **Add New Project**.
-   - **Opsi Import:**
-     - *Paling Cepat:* Pada bagian bawah, klik **Import Third-Party Git Repository**, lalu *paste* link GitHub proyek ini: `https://github.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express.git`
-     - *Alternatif:* Unduh [index.js](https://raw.githubusercontent.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/main/index.js) dan [package.json](https://raw.githubusercontent.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/main/package.json) ke repository GitHub kosong, lalu import repository tersebut di Vercel.
-2. **Setup Environment Variables di Vercel**:
-   - Di halaman konfigurasi deploy (atau nantinya di **Settings** > **Environment Variables**), masukkan konfigurasi `.env`.
-   - Anda bisa langsung **mengunggah file `.env`** atau **copy-paste seluruh isi `.env`** Anda ke kolom yang tersedia, dan semua variabel akan otomatis terisi. Anda tidak perlu memasukkan `PORT`.
-   - *Catatan:* Jika Anda mengubah/menambahkan env var *setelah* project ter-deploy, Anda perlu mendeploy ulang. Masuk ke tab **Deployments** di dashboard, klik titik tiga pada deployment terbaru Anda, lalu pilih **Redeploy**.
-
-**URL endpoint:**
-```
-https://<domain-vercel-anda.vercel.app>/api/calendar
-```
+1. Buka [Vercel Dashboard](https://vercel.com) > pilih project Anda > **Settings > Environment Variables**.
+2. Anda bisa langsung **mengunggah file `.env`** atau **copy-paste seluruh isi `.env`** ke kolom yang tersedia — semua variabel akan otomatis terisi. Anda tidak perlu memasukkan `PORT`.
+3. Setelah env var tersimpan, masuk ke tab **Deployments** > klik titik tiga pada deployment terbaru > pilih **Redeploy**.
+4. Setelah redeploy selesai, endpoint Anda siap digunakan:
+   ```
+   https://<nama-project-anda>.vercel.app/api/calendar
+   ```
 
 ---
 
