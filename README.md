@@ -195,6 +195,7 @@ Setelah backend berhasil ter-deploy, pasang *workflow* berikut di Botika:
 5. **Sesuaikan Persona** — klik tab **Persona** di sidebar kiri, lalu isi dengan teks persona di bagian [Chatbot Persona](#chatbot-persona) di atas.
 6. Sesuaikan secret pada node *Set User Variabel* (setelah node *Start*) dan node *Log Monitoring* — ganti dengan `PROXY_SECRET` yang sudah Anda buat.
 7. Pastikan endpoint di setiap node *HTTP Request* sudah mengarah ke URL Vercel Anda (misal: `https://<nama-project-anda>.vercel.app/api/calendar`).
+8. Setelah setup selesai, buka chatbot melalui tab sidebar bagian kiri bawah. Pilih menu **Integration**, lalu pilih **Webchat**. Nanti akan ada link di sana, tinggal buka dan pakai.
 
 ---
 
