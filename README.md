@@ -75,7 +75,7 @@ Refresh token hanya perlu didapatkan **sekali**. Server akan me-refresh access t
 
 1. Buat folder baru di mana saja, misalnya `get-token`.
 
-2. Di dalam folder tersebut, buat file bernama **`package.json`**. Salin kode di bawah ini — atau langsung ambil dari GitHub di file [`package.json`](https://github.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/blob/main/package.json) (klik tombol **Raw** lalu *Select All* dan *Copy*):
+2. Di dalam folder tersebut, buat file bernama **`package.json`**. Salin kode di bawah ini:
 
    ```json
    {
@@ -91,7 +91,7 @@ Refresh token hanya perlu didapatkan **sekali**. Server akan me-refresh access t
    }
    ```
 
-3. Buat file bernama **`get-token.js`**. Salin kode di bawah ini — atau langsung ambil dari GitHub di file [`get-token.js`](https://github.com/mamatqurtifa/calendar-reminder-and-backend-proxy-express/blob/main/get-token.js) (klik tombol **Raw** lalu *Select All* dan *Copy*). Setelah di-paste, **ganti `ISI_CLIENT_ID_KAMU` dan `ISI_CLIENT_SECRET_KAMU`** dengan nilai dari langkah sebelumnya:
+3. Buat file bernama **`get-token.js`**. Salin kode di bawah ini, setelah di-paste, **ganti `ISI_CLIENT_ID_KAMU` dan `ISI_CLIENT_SECRET_KAMU`** dengan nilai dari langkah sebelumnya:
 
    ```js
    const { google } = require('googleapis');
